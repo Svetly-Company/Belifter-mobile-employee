@@ -1,20 +1,18 @@
 import { SafeAreaView,ScrollView,StatusBar, StyleSheet, Text, Button, useColorScheme, View, TextInput, TouchableOpacity, ImageBackground, Image, Pressable } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { LinearGradient } from 'expo-linear-gradient';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
 
 
-export default function loginOptions(    ) {
+export default function loginOptions(  navigation : any  ) {
 
   return (
     <View style={styles.container}>
       <ImageBackground source={require ("../../assets/Background.png")} resizeMode="cover" style={[styles.image, styles.blur]}>
         <Image source={require ("../../assets/LogoLight.png")} style={styles.logo}></Image>
         <View style={styles.bottomDiv}>
-          <TouchableOpacity style={styles.beginButton} /*onPress={() => navigation.navigate('Register')}*/>Começar</TouchableOpacity>
+          <TouchableOpacity style={styles.beginButton} >Começar</TouchableOpacity>
           <Pressable>
             <Text style={styles.accountText}>Já tenho uma conta</Text>
           </Pressable>

@@ -2,7 +2,9 @@ import { SafeAreaView,ScrollView,StatusBar, StyleSheet, Text, useColorScheme, Vi
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { LinearGradient } from 'expo-linear-gradient';
 
-
+export function Register(){
+    return <Text>Oi</Text>
+}
 
 
 
