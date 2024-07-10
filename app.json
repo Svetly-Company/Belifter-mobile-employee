@@ -1,11 +1,12 @@
 {
   "expo": {
-    "name": "Belifter-mobile-employee",
-    "slug": "Belifter-mobile-employee",
+    "name": "BeLifterMobile",
+    "slug": "BeLifterMobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "scheme": "BeLifterMobile",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -25,6 +26,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-font",
+      "expo-router"
+    ]
   }
 }
