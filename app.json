@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "BeLifterMobile",
-    "slug": "BeLifterMobile",
+    "name": "BeLifterMobileEmployee",
+    "slug": "BeLifterMobileEmployee",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "scheme": "BeLifterMobile",
+    "scheme": "BeLifterMobileEmployee",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
