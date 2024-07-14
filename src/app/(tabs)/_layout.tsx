@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import { Barbell, Globe, House } from "phosphor-react-native";
+import { Barbell, ChatTeardropText, Globe, House } from "phosphor-react-native";
 import { StatusBar } from "expo-status-bar";
 import { AccessibilityState, GestureResponderEvent, Text, TouchableOpacity, StyleSheet } from "react-native";
 import {BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
@@ -25,7 +25,10 @@ export default function TabLayout(){
       tabBarLabelPosition: "beside-icon",
       tabBarLabelStyle: {
         textTransform: "capitalize",
-        fontFamily: "Montserrat_500Medium",
+        verticalAlign: 'middle',
+        fontFamily: "IBMPlexSans_500Medium",
+        fontSize: 10,
+        
       },
       tabBarActiveTintColor: "#fff",
       
@@ -60,6 +63,15 @@ export default function TabLayout(){
           return <TabButton {...props}/>
         }
       }}/>
+      <Tabs.Screen name="mensagens" options={{
+        tabBarIcon: ({size, color, focused}) => (
+          <ChatTeardropText size={size} color={color} weight="bold"/>
+        ),
+        
+        tabBarButton: (props) => {
+          return <TabButton {...props}/>
+        }
+      }}/>
     </Tabs>
     </>
   )
@@ -76,13 +88,14 @@ const styleTabButton = StyleSheet.create( {
   activeButton: {
     flex:1, 
     flexDirection: 'row', 
-    alignItems: 'center', 
+    alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#00592E',
+    backgroundColor: '#F73E43',
     color: 'white',
-    borderRadius: 35,
-    padding: 10,
-    margin: 5
+    borderRadius: 30,
+    gap: 6,
+    padding: 20,
+    margin: 3,
   },
   unActiveButton: {
     flex:1, 

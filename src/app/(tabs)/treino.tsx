@@ -2,7 +2,7 @@ import { Text, View, ScrollView, TouchableHighlight, Image } from "react-native"
 import { CaretDown, CaretUp } from "phosphor-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HeaderHome  from "../../components/HeaderHome";
-import { Frequency } from "../../components/Frequency";
+import { WeeklyDiary } from "../../components/WeeklyDiary";
 import { Workouts } from "../../components/Workouts";
 import { useState } from "react";
 
@@ -16,7 +16,7 @@ export default function Treino(){
         <SafeAreaView style={{flex: 1}}>
           <ScrollView className="bg-gray-950 flex-1">
           <HeaderHome />
-          <Frequency />
+          <WeeklyDiary />
           <View className="flex gap-2 flex-col mt-8">
             <Text className=" px-8 lex-1 font-ibmRegular text-white text-x">Fichas de Treino</Text>
             <ScrollView horizontal={true} className="px-3 flex mt-2 flex-row">
@@ -37,7 +37,7 @@ export default function Treino(){
               {
                 status ?
                 <View className="flex flex-col my-2">
-                  <View className="flex-row justify-between items-center px-5">
+                  <View className="flex-row justify-between items-start px-5 h-52">
                     <View className="flex flex-row gap-5 items-center">
                       <Image source={require('../../assets/moca.jpg')} className="w-10 h-10 rounded-full" />
                       <Text className="text-gray-300 font-ibmRegular">Haulices Dalberto Solza</Text>
@@ -46,7 +46,7 @@ export default function Treino(){
                   </View>
                 </View>
                 :
-                <View/>
+                <View className="h-52"/>
               }
               </View>
             </View>

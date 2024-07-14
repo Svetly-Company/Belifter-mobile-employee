@@ -34,12 +34,12 @@ export default function RegisterScreen(){
           value={isChecked}
           />
           <Text style={{color: '#CDCDCD'}}>Eu aceito os 
-            <Text style={{color: '#00BF63'}}> termos </Text>
-            e a <Text style={{color: '#00BF63'}}>politica de privacidade</Text>
+            <Text style={{color: '#F73E43'}}> termos </Text>
+            e a <Text style={{color: '#F73E43'}}>politica de privacidade</Text>
           </Text>
         </View>
         
-        <TouchableOpacity style={{backgroundColor: "#00BF63", height: 46, alignItems:"center", justifyContent: "center", marginTop: 28, borderRadius: 40}}>
+        <TouchableOpacity style={{backgroundColor: "#F73E43", height: 46, alignItems:"center", justifyContent: "center", marginTop: 28, borderRadius: 40}}>
           <Text className="text-white">Avançar</Text>
         </TouchableOpacity>
 

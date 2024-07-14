@@ -10,7 +10,7 @@ export default function Comunidade(){
     <SafeAreaView style={{flex: 1}}>
         <ScrollView className="bg-gray-950 flex-1">
             <View className="p-7 flex-row justify-between items-center">
-            <Image source={require('../../assets/BeLifter.jpg')} className="h-14 w-32" />
+            <Image source={require('../../assets/BeLifter.png')} className="h-14 w-32" />
                 <View className="flex flex-row gap-3">
                     <TouchableOpacity>
                         <Bell color="white" weight="bold" size={28}/>
