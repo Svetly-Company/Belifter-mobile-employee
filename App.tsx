@@ -1,45 +1,49 @@
-import { SafeAreaView,ScrollView,StatusBar, StyleSheet, Text, useColorScheme, View, TextInput, TouchableOpacity, ImageBackground, Image } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
+import './src/styles/global.css'
+import Home from './src/app/(tabs)/home';
+import LoginOptions from './src/app/index';
 
+import { 
+  useFonts,
+  Montserrat_400Regular,
+  Montserrat_500Medium
+ } from '@expo-google-fonts/montserrat';
+
+ import {
+  IBMPlexSans_100Thin,
+  IBMPlexSans_100Thin_Italic,
+  IBMPlexSans_200ExtraLight,
+  IBMPlexSans_200ExtraLight_Italic,
+  IBMPlexSans_300Light,
+  IBMPlexSans_300Light_Italic,
+  IBMPlexSans_400Regular,
+  IBMPlexSans_400Regular_Italic,
+  IBMPlexSans_500Medium,
+  IBMPlexSans_500Medium_Italic,
+  IBMPlexSans_600SemiBold,
+  IBMPlexSans_600SemiBold_Italic,
+  IBMPlexSans_700Bold,
+  IBMPlexSans_700Bold_Italic,
+} from '@expo-google-fonts/ibm-plex-sans';
+import Comunidade from './src/app/(tabs)/comunidade';
 
 export default function App() {
+  const [fontsLoaded] = useFonts(
+    {
+      Montserrat_400Regular,
+      Montserrat_500Medium,
+      IBMPlexSans_400Regular,
+      IBMPlexSans_500Medium
+    }
+  )
   return (
-    <View style={styles.container}>
-      <ImageBackground source={require ("./assets/backgroung_image_login.png")} resizeMode="cover" style={styles.image}>
-        <View style={styles.bigDiv}>
-          <TouchableOpacity style={styles.button}><Image source={require ("./assets/google_icon.png")} style={styles.imageicon}></Image><Text>Login com o Google</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.button}><Text>Login com email</Text></TouchableOpacity>
-        </View>
-      </ImageBackground>
-    </View>
+    <>
+    <StatusBar backgroundColor={'#111112'} style="light" translucent/>
+    {
+      fontsLoaded? <Comunidade /> : ''
+    }
+    
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    fontFamily: 'sans-serif',
-    flex: 1,
-    backgroundColor: 'blue',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  image: {
-    width: '100%', 
-    height: '100%',
-  },
-  button: {
-    width: 250,
-    height: 50,
-    backgroundColor : 'white',
-    borderRadius: 10,
-    display: 'flex',
-    flexDirection:'row',
-  },
-  imageicon: {
-    width: 30,
-    height: 30,
-  },
-  bigDiv: {
-    height: '30%',
-    width: '100%',
-  },
-});

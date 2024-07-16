@@ -1,18 +1,19 @@
 {
   "expo": {
-    "name": "BeLifterFuncionario",
-    "slug": "BeLifterFuncionario",
+    "name": "BeLifterMobileEmployee",
+    "slug": "BeLifterMobileEmployee",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "scheme": "BeLifterMobileEmployee",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
-      "./assets/*"
+      "**/*"
     ],
     "ios": {
       "supportsTablet": true
@@ -25,6 +26,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-font",
+      "expo-router"
+    ]
   }
 }
