@@ -63,7 +63,7 @@ export default function TabLayout(){
           return <TabButton {...props}/>
         }
       }}/>
-      <Tabs.Screen name="message" options={{
+      <Tabs.Screen name="messages" options={{
         tabBarIcon: ({size, color, focused}) => (
           <ChatTeardropText size={size} color={color} weight="bold"/>
         ),

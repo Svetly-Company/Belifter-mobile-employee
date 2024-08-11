@@ -13,13 +13,8 @@ export default function Treino(){
 
               <HeaderHome/>
               <View className="flex w-full">
-                <Text className="text-white text-[22px] pt-5">Alunos</Text>
-
-                <View>
-                  <BoxModelTwo title="Name"/>
-                </View>
-
-                <View className="mt-10">
+                <Text className="text-white text-3xl mt-5 ml-6">Alunos</Text>
+                <View className="mt-5 flex justify-center items-center">
                   <BoxModelTwo title="Name"/>
                   <BoxModelTwo title="Name"/>
                   <BoxModelTwo title="Name"/>

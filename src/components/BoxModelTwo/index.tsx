@@ -6,13 +6,12 @@ import { Link } from "expo-router";
 interface boxModelParams {
     title: string,
     desc?: string,
-    bgColor?: boolean
 }
 
-export function BoxModelTwo( {title, desc, bgColor=false} : boxModelParams) {
+export function BoxModelTwo( {title, desc } : boxModelParams) {
     return(
-        <View className={"flex-wrap " + (!bgColor ? 'bg-neutral-900' : 'bg-neutral-950') + " mt-4 px-6 rounded-3xl gap-2 h-[98px] w-[358]"}>
-            <View className="flex-row justify-between items-center">
+        <View className={"flex flex-wrap justify-center bg-gray-400 mt-2 px-6 rounded-3xl gap-2 h-24 w-11/12"}>
+            <View className="flex flex-row items-center">
               <View className="bg-gray-100 p-2 rounded-[100] mr-2 h-[50] w-[50]">
                 
                 
@@ -37,3 +36,4 @@ export function BoxModelTwo( {title, desc, bgColor=false} : boxModelParams) {
         </View>
     )
 }
+
