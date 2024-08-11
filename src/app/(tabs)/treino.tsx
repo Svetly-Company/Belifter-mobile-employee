@@ -12,7 +12,7 @@ export default function Treino(){
             <ScrollView>
 
               <HeaderHome/>
-              <View className="flex w-full px-5">
+              <View className="flex w-full">
                 <Text className="text-white text-[22px] pt-5">Alunos</Text>
 
                 <View>

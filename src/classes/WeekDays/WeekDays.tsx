@@ -40,6 +40,9 @@ export function getDayOfWeek(type:'number'|'string'){
             return week[dayOfWeek]
     }
 }
+
+export let arr = [{id: 0, name: "Julio"}, {id: 1, name: "Pedro"}, {id: 2, name: "Leo"}, {id: 3, name: "Luna"}, {id: 4, name: "Isaque"}, {id: 5, name: "João"}, {id: 6, name: "Alvaro"}]
+
 export function getWeek(){
     return createWeek(dayOfWeek, actualDay);
 }

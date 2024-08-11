@@ -11,7 +11,7 @@ interface boxModelParams {
 
 export function BoxModelTwo( {title, desc, bgColor=false} : boxModelParams) {
     return(
-        <View className={"flex-wrap " + (!bgColor ? 'bg-neutral-900' : 'bg-neutral-950') + " mt-4 py-6 px-6 rounded-3xl gap-2 h-[98px] w-[358] ml-8"}>
+        <View className={"flex-wrap " + (!bgColor ? 'bg-neutral-900' : 'bg-neutral-950') + " mt-4 px-6 rounded-3xl gap-2 h-[98px] w-[358]"}>
             <View className="flex-row justify-between items-center">
               <View className="bg-gray-100 p-2 rounded-[100] mr-2 h-[50] w-[50]">
                 
