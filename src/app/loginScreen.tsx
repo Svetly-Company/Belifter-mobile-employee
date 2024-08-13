@@ -52,16 +52,16 @@ export default function LoginScreen( ) {
     return (
         <View className='bg-gray-950 h-full p-8 w-full text-center items-center content-center-center flex'>
             <Text className='color-white mx-4 self-start font-ibmMedium text-lg'>Faça login na sua conta</Text>
-            <View className='flex w-11/12 gap-2'>
+            <View className='flex w-full gap-2'>
                 <TextInput 
-                    className='h-10 w-80 bg-red bg-neutral-900 rounded-2xl mt-8 color-white text-left p-2' 
+                    className='h-10 w-full bg-red bg-neutral-900 rounded-2xl mt-8 color-white text-left p-2' 
                     placeholder='Email' 
                     placeholderTextColor={'#A5A5A5'}
                     onChangeText={handleSetEmail}
                     value={email}
                 />  
                 <TextInput 
-                    className='h-10 w-80 bg-neutral-900 rounded-2xl mt-8 color-white text-left p-2'
+                    className='h-10 w-full bg-neutral-900 rounded-2xl mt-8 color-white text-left p-2'
                     placeholder='Senha' 
                     placeholderTextColor={'#A5A5A5'}
                     onChangeText={handleSetPassword}
