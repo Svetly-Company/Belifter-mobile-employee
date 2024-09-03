@@ -2,6 +2,7 @@ import { Text, View, TextInput, TouchableOpacity, ToastAndroid, Image } from 're
 import { router } from 'expo-router';
 import { useState } from 'react';
 import axios from 'axios';
+import { setUserData } from '../storage/userData/setUserData';
 
 export default function LoginScreen( ) {
 
@@ -22,7 +23,6 @@ export default function LoginScreen( ) {
     }
 
     async function verifyUser(){
-        router.navigate('/home')
         try{
             const val = await axios.post('https://belifter-server.onrender.com/auth/signin', {
                 email,
@@ -35,8 +35,12 @@ export default function LoginScreen( ) {
                 return JSON.stringify(res.data)
             }).catch((err) => {throw err})
 
-            const parsedToken = JSON.parse(val) 
+            const parsedToken = JSON.parse(val)
+
             setAccessToken(parsedToken['access_token'])
+            await getUserFromToken(parsedToken['access_token'])
+            router.navigate('/home')
+
         }catch(err){
             ToastAndroid.show('Usuário inexistente', ToastAndroid.SHORT)
         }
@@ -47,7 +51,25 @@ export default function LoginScreen( ) {
         //     }
         // }).then((res) => {
         //     return res.status==200 ? true : false
-        // })    
+        // })
+
+        async function getUserFromToken(token? : string){
+            if(token==undefined){
+                return;
+            }
+    
+            const userData = await axios.get('https://belifter-server.onrender.com/auth/profile', { 
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then((res) => {
+                const savedData = {...res.data, token}
+                return JSON.stringify(savedData)
+            }).catch((err) => {throw new err})
+            
+            setUserData(userData)
+            
+        }
     }
     return (
         <View className='bg-gray-950 h-full p-8 w-full text-center items-center content-center-center flex'>
@@ -64,6 +86,7 @@ export default function LoginScreen( ) {
                     className='h-10 w-full bg-neutral-900 rounded-2xl mt-8 color-white text-left p-2'
                     placeholder='Senha' 
                     placeholderTextColor={'#A5A5A5'}
+                    secureTextEntry
                     onChangeText={handleSetPassword}
                     value={password}
                 />  

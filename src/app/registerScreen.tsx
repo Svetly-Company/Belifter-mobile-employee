@@ -1,14 +1,62 @@
+import axios from "axios";
 import Checkbox from "expo-checkbox";
+import { router } from "expo-router";
+import { Route } from "expo-router/build/Route";
 import { useState } from "react";
-import { Text, TextInput, View, TouchableOpacity, Image } from "react-native";
+import { Text, TextInput, View, TouchableOpacity, Image, ToastAndroid } from "react-native";
 
 export default function RegisterScreen(){
 
   
   const[isChecked, setChecked] = useState(false)
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState<string>('');
+  const [name, setName] = useState('');
 
   function handleCheckBox(){
     setChecked(!isChecked)
+  }
+
+  function handleSetEmail(text: string){
+    setEmail(text);
+  }
+
+  function handleSetPassword(text: string){
+      setPassword(text)
+  }
+
+  function handleSetName(text: string){
+    setName(text)
+  }
+  async function registerUser(){
+    try{
+        if(!isChecked){
+          ToastAndroid.show(`Aceite os termos para prosseguir!`, ToastAndroid.SHORT)
+          return;
+        }
+
+        const val = await axios.post('https://belifter-server.onrender.com/account/create', {
+            name,
+            email,
+            password
+        })
+        .then((res) => {
+            if(res.data.status){
+                throw new Error(String(res.data.message))
+            }
+            
+            return JSON.stringify(res.data)
+        }).catch((err) => {throw err})
+            
+        
+        const parsedToken = JSON.parse(val)
+        
+        router.navigate('/loginScreen')
+        
+        
+    }catch(err){
+        ToastAndroid.show(`Erro ao preencher os campos ${err}`, ToastAndroid.SHORT)
+    }
   }
   return (
     <View className="flex-1 bg-gray-950 p-4">
@@ -17,14 +65,21 @@ export default function RegisterScreen(){
         <TextInput className="w-full bg-neutral-900 px-4 mb-11 py-2 rounded-2xl color-gray-200" 
         placeholderTextColor={"#A5A5A5"}
         placeholder="Nome de usuário"
+        onChangeText={handleSetName}
+        value={name}
         />
         <TextInput className="w-full bg-neutral-900 px-4 mb-11 py-2 rounded-2xl color-gray-200" 
         placeholderTextColor={"#A5A5A5"}
         placeholder="Email"
+        onChangeText={handleSetEmail}
+        value={email}
         />
         <TextInput className="w-full bg-neutral-900 px-4 mb-11 py-2 rounded-2xl color-gray-200"
         placeholderTextColor={"#A5A5A5"}
         placeholder="Senha"
+        secureTextEntry
+        onChangeText={handleSetPassword}
+        value={password}
         />
         <View className="flex-row">
           <Checkbox 
@@ -39,7 +94,7 @@ export default function RegisterScreen(){
           </Text>
         </View>
         
-        <TouchableOpacity style={{backgroundColor: "#F73E43", height: 46, alignItems:"center", justifyContent: "center", marginTop: 28, borderRadius: 40}}>
+        <TouchableOpacity style={{backgroundColor: "#F73E43", height: 46, alignItems:"center", justifyContent: "center", marginTop: 28, borderRadius: 40}} onPress={registerUser}>
           <Text className="text-white">Avançar</Text>
         </TouchableOpacity>
 
