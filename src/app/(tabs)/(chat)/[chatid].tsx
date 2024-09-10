@@ -17,7 +17,7 @@ export default function Chat() {
   }
   
   type propMessage = {
-    idMessages:number,
+    idMessage:number,
     content:string,
     sender:sender
   }
@@ -76,6 +76,7 @@ export default function Chat() {
   }
 
   async function sendMessage(){
+    if(!text) return;
     const userData = await getUserData()
     try{
       const userMessage = {
@@ -88,7 +89,6 @@ export default function Chat() {
         headers: { 'Authorization': `Bearer ${userData.token}`} 
       }).then(async (res) => {
         if(res.data.status){
-          console.log("deu erro")
           throw new Error(String(res.data.message))
         }
         setText("")
@@ -123,7 +123,7 @@ export default function Chat() {
         </View>
         <ScrollView className="flex w-full flex-col gap-2">
           {messages && messages.map((x)=>(
-            <MessageBox idSend={x.sender.idAccount} idUser={user.id} message={x.content} key={x.idMessages}/>
+            <MessageBox idSend={x.sender.idAccount} idUser={user.id} message={x.content} key={x.idMessage}/>
           ))}
         </ScrollView>
         <View className='flex flex-row items-center h-20 w-full bg-gray-950'>

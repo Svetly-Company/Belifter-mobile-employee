@@ -41,10 +41,6 @@ export default function Mensagens(){
     name:string
   }
   
-
-  async function getContatos() {
-      
-  }
   return(
     <SafeAreaView style={{flex: 1}}>
           <View className="bg-black flex-1">
@@ -57,7 +53,7 @@ export default function Mensagens(){
                   cont && cont.map((x) => (
                     <Link href={{pathname: "(chat)/[chatid]", params: {chatid: x.id}}}asChild key={x.id}>
                      <TouchableOpacity>
-                      <Contacts name={x.name} notify/>
+                      <Contacts name={x.name} lastMessage={x.lastMessageContent} notify/>
                      </TouchableOpacity>
                     </Link>
                   ))

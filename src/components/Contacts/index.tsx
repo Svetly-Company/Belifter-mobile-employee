@@ -7,7 +7,7 @@ interface contactsParams {
     name: string,
     lastMessage?: string,
     notify?: boolean,
-    lastDate?: Date
+    lastDate?: string
 }
 
 export function Contacts( {name, lastMessage, notify, lastDate} : contactsParams) {
@@ -22,11 +22,11 @@ export function Contacts( {name, lastMessage, notify, lastDate} : contactsParams
 
                 <View className="gap-1 flex-1">
                     <Text className="font-ibmRegular text-white text-[16px] ml-3">{name}</Text>
-                    <Text numberOfLines={1} className="font-regular font-thin text-sm w-48 text-gray-300 ml-3">Você: Amo o tal do bombs</Text>
+                    <Text numberOfLines={1} className="font-regular font-thin text-sm w-48 text-gray-300 ml-3">{lastMessage}</Text>
                 </View>
                     <View className="flex items-center gap-4">
                         <View className={"h-3 w-3 rounded-full bg bg-red-600"}/>
-                        <Text className="font-regular font-thin text-sm text-gray-300">4:20</Text>
+                        <Text className="font-regular font-thin text-sm text-gray-300">10:20</Text>
                     </View>
                 </View>
             </View>
