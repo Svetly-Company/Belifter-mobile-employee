@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image, ToastAndroid } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { createRef, useEffect, useRef, useState } from 'react'
 import { Link, useLocalSearchParams } from 'expo-router' 
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { CaretLeft, PaperPlaneRight, Smiley } from 'phosphor-react-native'
@@ -26,8 +26,10 @@ export default function Chat() {
     id: 0,
     token: ''
   })
-
+  
   const { chatid } = useLocalSearchParams();
+  
+  const scrollRef = createRef<ScrollView>()
 
   const [chatName, setChatName] = useState("");
 
@@ -42,6 +44,10 @@ export default function Chat() {
   useEffect(()=>{
     loadUserData()
   }, [messages])
+
+  function scrollToEnd(){
+    scrollRef.current?.scrollToEnd()
+  }
   
   async function loadUserData(){
     const userData = await getUserData()
@@ -121,10 +127,11 @@ export default function Chat() {
             </View>
           </View>
         </View>
-        <ScrollView className="flex w-full flex-col gap-2">
+        <ScrollView ref={scrollRef} className="flex w-full flex-col gap-2" onContentSizeChange={() => scrollToEnd()}>
           {messages && messages.map((x)=>(
             <MessageBox idSend={x.sender.idAccount} idUser={user.id} message={x.content} key={x.idMessage}/>
-          ))}
+          ))
+          }
         </ScrollView>
         <View className='flex flex-row items-center h-20 w-full bg-gray-950'>
           <View className="flex flex-row w-5/6 mx-2 px-2 py-1 gap-1 items-center border border-white rounded-full">
