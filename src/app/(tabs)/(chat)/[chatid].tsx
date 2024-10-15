@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, Image, ToastAndroid } from 'react-native'
+import { View, Text, StyleSheet, Image, ToastAndroid, ActivityIndicator } from 'react-native'
 import React, { createRef, useEffect, useRef, useState } from 'react'
-import { Link, useLocalSearchParams } from 'expo-router' 
+import { Link, router, useLocalSearchParams } from 'expo-router' 
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { CaretLeft, PaperPlaneRight, Smiley } from 'phosphor-react-native'
 import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler'
@@ -8,6 +8,7 @@ import { MessageBox } from '../../../components/MessageBox'
 import EmojiPicker, { pt, EmojiType } from 'rn-emoji-keyboard'
 import { getUserData } from '../../../storage/userData/getUserData'
 import axios from 'axios'
+import Loading from '../../../components/Loading'
 
 export default function Chat() {
   
@@ -26,14 +27,16 @@ export default function Chat() {
     id: 0,
     token: ''
   })
-  
-  const { chatid } = useLocalSearchParams();
+
+  const [loading, setLoading] = useState<boolean>(true)
+
+  const { chatid } = useLocalSearchParams()
   
   const scrollRef = createRef<ScrollView>()
 
   const [chatName, setChatName] = useState("");
 
-  const recId:number = parseInt(chatid?.toString() ?? "")
+  const recId = parseInt(chatid?.toString() ?? "") 
 
   const [messages, setMessages] = useState<propMessage[]>([])
 
@@ -43,6 +46,10 @@ export default function Chat() {
   
   useEffect(()=>{
     loadUserData()
+  }, [chatid])
+
+  useEffect(()=>{
+    if(!loading) loadMessage(user)
   }, [messages])
 
   function scrollToEnd(){
@@ -52,18 +59,6 @@ export default function Chat() {
   async function loadUserData(){
     const userData = await getUserData()
     try{
-      const val = await axios.get(`https://belifter-server.onrender.com/chat/${chatid}`, {
-        headers: { 'Authorization': `Bearer ${userData.token}`} 
-      }).then((res) => {
-        if(res.data.status){
-          throw new Error(String(res.data.message))
-        }
-        return res.data;
-      }).catch((err) => {throw err})
-
-      const messages = val
-      setMessages(messages)
-
       const val2 = await axios.get("https://belifter-server.onrender.com/chat", { 
         headers: { 'Authorization': `Bearer ${userData.token}`} 
       }).then((res) => {
@@ -73,12 +68,34 @@ export default function Chat() {
         return res.data;
       }).catch((err) => {throw err})
       const name:string = val2.find((element: { id: number }) => element.id == recId).name
+      
+      await loadMessage(userData)
+      setUser(userData)
       setChatName(name)
+      setLoading(false)
     }catch(err){
       setMessages([])
-      setChatName(recId.toString())
-    } 
-    setUser(userData)
+      setChatName("")
+      setLoading(true)
+    }
+
+  }
+
+  async function loadMessage(userData: {token: any}){
+    try{
+      const val = await axios.get(`https://belifter-server.onrender.com/chat/${chatid}`, {
+        headers: { 'Authorization': `Bearer ${userData.token}`} 
+      }).then((res) => {
+        if(res.data.status){
+          throw new Error(String(res.data.message))
+        }
+        return res.data;
+      }).catch((err) => {throw err})
+      setMessages(val)
+
+    }catch(err){
+      throw err
+    }
   }
 
   async function sendMessage(){
@@ -113,22 +130,32 @@ export default function Chat() {
       <View className="bg-gray-950 flex-1">
         <View className="flex ">
           <View className="bg-gray-950" style={styles.borderStyle}>
-            <View className="p-6 flex-row justify-between items-center">
-              <Link href="messages" asChild>
-                <TouchableOpacity>
-                  <CaretLeft color="#F73E43" weight="regular" size={28}/>
-                </TouchableOpacity>
-              </Link>
-              <View className="items-center">
-                <Text className="text-white text-2xl font-ibmRegular">{chatName}</Text>
-                <Text className="text-red-550 text-base font-ibmMedium font-semibold">online</Text>
-              </View>
-              <Image source={require('../../../assets/moca.jpg')} className="w-14 h-14 rounded-full" />
-            </View>
+                {
+                  loading ? 
+                  <Loading/>
+                  : <>
+                <View className="p-6 flex-row justify-between items-center">
+                  <TouchableOpacity onPress={() => {
+                    setMessages([])
+                    setChatName("")
+                    setLoading(true)
+                    router.navigate('/(chat)/0')
+                    router.navigate('/messages')
+                    }}>
+                    <CaretLeft color="#F73E43" weight="regular" size={28}/>
+                  </TouchableOpacity>
+                  <View className="items-center justify-center">
+                    <Text className="text-white text-2xl font-ibmRegular">{chatName}</Text>
+                    <Text className="text-red-550 text-base font-ibmMedium font-semibold">online</Text>
+                  </View>
+                  <Image source={require('../../../assets/moca.jpg')} className="w-14 h-14 rounded-full" />
+                </View>
+                </>
+                }
           </View>
         </View>
         <ScrollView ref={scrollRef} className="flex w-full flex-col gap-2" onContentSizeChange={() => scrollToEnd()}>
-          {messages && messages.map((x)=>(
+          {loading ? <ActivityIndicator size="large" color="#F73E43" className="mt-96"/> : messages.map((x)=>(
             <MessageBox idSend={x.sender.idAccount} idUser={user.id} message={x.content} key={x.idMessage}/>
           ))
           }
