@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, Image, ToastAndroid, ActivityIndicator } from 'react-native'
-import React, { createRef, useEffect, useRef, useState } from 'react'
-import { Link, router, useLocalSearchParams } from 'expo-router' 
+import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native'
+import React, { createRef, useEffect, useState } from 'react'
+import { router, useLocalSearchParams } from 'expo-router' 
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { CaretLeft, PaperPlaneRight, Smiley } from 'phosphor-react-native'
 import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler'
@@ -36,6 +36,8 @@ export default function Chat() {
 
   const [chatName, setChatName] = useState("");
 
+  const [chatMedia, setChatMedia] = useState("");
+
   const recId = parseInt(chatid?.toString() ?? "") 
 
   const [messages, setMessages] = useState<propMessage[]>([])
@@ -68,10 +70,13 @@ export default function Chat() {
         return res.data;
       }).catch((err) => {throw err})
       const name:string = val2.find((element: { id: number }) => element.id == recId).name
+      const mediaVal:string = val2.find((element: { id: number }) => element.id == recId).mediaUrl
+      const media = mediaVal ? mediaVal : "https://reactnative.dev/img/tiny_logo.png"
       
       await loadMessage(userData)
       setUser(userData)
       setChatName(name)
+      setChatMedia(media)
       setLoading(false)
     }catch(err){
       setMessages([])
@@ -148,7 +153,7 @@ export default function Chat() {
                     <Text className="text-white text-2xl font-ibmRegular">{chatName}</Text>
                     <Text className="text-red-550 text-base font-ibmMedium font-semibold">online</Text>
                   </View>
-                  <Image source={require('../../../assets/moca.jpg')} className="w-14 h-14 rounded-full" />
+                  <Image source={{uri: chatMedia}} className="w-14 h-14 rounded-full" />
                 </View>
                 </>
                 }

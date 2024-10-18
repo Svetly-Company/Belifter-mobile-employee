@@ -15,7 +15,7 @@ export default function Mensagens(){
 
   useEffect(()=>{
     loadUserData()
-  }, [cont])
+  }, [])
 
   async function loadUserData(){
     const userData = await getUserData()
@@ -33,6 +33,7 @@ export default function Mensagens(){
 
   type propContatos = {
     id:number,
+    mediaUrl: string,
     lastMessageContent:string,
     lastMessageDate:string,
     name:string
@@ -41,11 +42,11 @@ export default function Mensagens(){
   return(
     <SafeAreaView style={{flex: 1}}>
           <View className=" bg-black flex-1">
-            <ScrollView>
+            <ScrollView className="w-full">
               <HeaderHome/>
-              <View className="flex px-5 mt-2">
+              <View className="flex px-5 mt-2 w-full">
                 <Text className="text-white text-[22px] pt-5">Mensagens</Text>
-                <View className="mt-2 justify-center items-center">
+                <View className="mt-2 justify-center items-center w-full">
                   {
                     loading ? 
                       <ActivityIndicator size="large" color="#F73E43" className="mt-72"/>
@@ -53,7 +54,7 @@ export default function Mensagens(){
                     cont.map((x) => (
                       <Link href={{pathname: "(chat)/[chatid]", params: {chatid: x.id}}} asChild key={x.id}>
                       <TouchableOpacity>
-                        <Contacts name={x.name} lastMessage={x.lastMessageContent} notify/>
+                        <Contacts name={x.name} lastMessage={x.lastMessageContent} mediaUrl={x.mediaUrl} notify/>
                       </TouchableOpacity>
                       </Link>
                     )) 

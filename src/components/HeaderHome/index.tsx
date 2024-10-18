@@ -1,6 +1,5 @@
-import { Image, Text, View, ImageBackground, TouchableOpacity, StyleSheet  } from "react-native";
-import {Bell, CaretRight} from "phosphor-react-native"
-import { Link } from "expo-router";
+import { Image, Text, View, StyleSheet  } from "react-native";
+import {Bell, } from "phosphor-react-native"
 
 export default function HeaderHome(){
   return(
