@@ -1,34 +1,38 @@
 import { Tabs } from "expo-router";
-import { Barbell, ChatTeardropText, Globe, House } from "phosphor-react-native";
+import { Barbell, ChatTeardropText, Globe, House, User } from "phosphor-react-native";
 import { StatusBar } from "expo-status-bar";
-import { AccessibilityState, GestureResponderEvent, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { TouchableOpacity, StyleSheet } from "react-native";
 import {BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
+import { QueryClientProvider, QueryClient } from "react-query";
 
+
+const queryClient = new QueryClient()
 export default function TabLayout(){
   return(
-    <>
-    <StatusBar backgroundColor={'#111112'} style="light" translucent/>
+    <QueryClientProvider client={queryClient}> 
+    <StatusBar backgroundColor={'#000'} style="light" translucent/>
     <Tabs screenOptions={({navigation, route}) => ({
       headerShown: false,
       tabBarLabel: navigation.isFocused() ? route.name : '',
       tabBarStyle: {
         backgroundColor: "#232324",
-        borderTopWidth: 0,
+        display: 'flex',
         position: "absolute",
-        bottom: 40,
-        left: 14,
-        right: 14,
+        bottom: 15,
+        left: 28,
+        right: 28,
         borderRadius: 35,
         height: 65,
+        paddingHorizontal: 5,
+        borderWidth: 0,
+        borderColor: '#000'
         
       },
       tabBarLabelPosition: "beside-icon",
       tabBarLabelStyle: {
         textTransform: "capitalize",
-        verticalAlign: 'middle',
-        fontFamily: "IBMPlexSans_500Medium",
-        fontSize: 10,
-        
+        fontFamily: "Montserrat_500Medium",
+        fontSize: 10
       },
       tabBarActiveTintColor: "#fff",
       
@@ -63,6 +67,16 @@ export default function TabLayout(){
           return <TabButton {...props}/>
         }
       }}/>
+
+      <Tabs.Screen name="perfil" options={{
+        tabBarIcon: ({size, color, focused}) => (
+          <User size={size} color={color} weight="bold"/>
+        ),
+
+        tabBarButton: (props) => {
+          return <TabButton {...props}/>
+        }
+      }} />
       <Tabs.Screen name="messages" options={{
         tabBarIcon: ({size, color, focused}) => (
           <ChatTeardropText size={size} color={color} weight="bold"/>
@@ -76,8 +90,9 @@ export default function TabLayout(){
         tabBarStyle: {display: "none"},
         href: null,
       }}/>
+
     </Tabs>
-    </>
+    </QueryClientProvider>
   )
 }
 
@@ -90,23 +105,25 @@ function TabButton({children, onPress, accessibilityState}: BottomTabBarButtonPr
 
 const styleTabButton = StyleSheet.create( {
   activeButton: {
-    flex:1, 
-    flexDirection: 'row', 
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#F73E43',
-    color: 'white',
-    borderRadius: 30,
-    gap: 6,
-    padding: 20,
-    margin: 3,
-  },
-  unActiveButton: {
-    flex:1, 
+    flex: 2,   
     flexDirection: 'row', 
     alignItems: 'center', 
     justifyContent: 'center',
-    backgroundColor: 'transparent'
+    backgroundColor: '#F73E43',
+    color: 'white',
+    borderRadius: 35,
+    padding: 17,
+    margin: 6,
+  },
+  unActiveButton: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    justifyContent: 'flex-end',
+    backgroundColor: 'transparent',
+    paddingRight: 7,
+
   }
 
 

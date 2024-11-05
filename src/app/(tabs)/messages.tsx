@@ -7,6 +7,7 @@ import { Link } from "expo-router";
 import { useEffect, useState } from "react";
 import { getUserData } from "../../storage/userData/getUserData";
 import axios from "axios";
+import { CaretLeft } from "phosphor-react-native";
 
 export default function Mensagens(){
   
@@ -43,8 +44,12 @@ export default function Mensagens(){
     <SafeAreaView style={{flex: 1}}>
           <View className=" bg-black flex-1">
             <ScrollView className="w-full">
-              <HeaderHome/>
-              <View className="flex px-5 mt-2 w-full">
+              <View className="py-5 mt-5 px-3">
+                <Link href="/home">
+                  <CaretLeft size={32} color="#F73E43"/>
+                </Link>
+              </View>
+              <View className="flex px-5 w-full">
                 <Text className="text-white text-[22px] pt-5">Mensagens</Text>
                 <View className="mt-2 justify-center items-center w-full">
                   {

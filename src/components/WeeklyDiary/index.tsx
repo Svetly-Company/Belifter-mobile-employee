@@ -7,7 +7,7 @@ export function WeeklyDiary(){
     return(
     <View className="flex gap-2 flex-col mt-8 px-8">
         <View className="flex flex-row">
-            <Text className="flex-1 font-ibmRegular text-gray-300">Frequência de Treino</Text>
+            <Text className="flex-1 font-ibmRegular text-gray-300">Calendário de Treino</Text>
             <TouchableOpacity>
                 <ArrowCircleRight color="white" size={15}/>
             </TouchableOpacity>
