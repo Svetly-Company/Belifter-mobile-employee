@@ -145,7 +145,7 @@ export default function PostForm() {
       httpMethod: 'POST',
       uploadType: FileSystem.FileSystemUploadType.MULTIPART,
       fieldName: 'file'
-    })
+    }).catch((err) => {throw err})
     
     return mediaUlr.body
 
@@ -244,7 +244,7 @@ export default function PostForm() {
               value={changeEvent ? hours : weight}
               onChangeText={handleChangeInput}
             />
-            <TouchableOpacity style={{backgroundColor: '#00BF63', width: 240, height: 40, borderRadius: 4, alignItems: "center", justifyContent: 'center'}} onPress={handleSentModal}>
+            <TouchableOpacity style={{backgroundColor: '#F73E43', width: 240, height: 40, borderRadius: 4, alignItems: "center", justifyContent: 'center'}} onPress={handleSentModal}>
               <Text className="font-ibmMedium font-bold text-white">Concluido</Text>
             </TouchableOpacity>
           </View>

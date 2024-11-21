@@ -8,6 +8,7 @@ import { ScrollView } from "react-native-virtualized-view";
 import { useQuery } from "react-query";
 import { userStorage } from "../../storage/zustand/store";
 import { ImageSourcePropType } from "react-native";
+import { router } from "expo-router";
 
 interface authorObject {
     name: string
@@ -39,51 +40,7 @@ export default function Comunidade(){
         }
         
     })
-
-    // useEffect(()=>{
-        
-    //     const fetch = async () => {
-    //         if(user) {
-    //             loadPosts()
-    //             return;
-    //         } 
-    //         loadUserData() 
-            
-    //     }
-    //     fetch()
-
-    //     console.log(posts)
-    // }, [])
-
-    // async function loadUserData(){
-    //     const userData = await getUserData()
-    //     setUser(userData)
-    //     loadPosts()
-    //     console.log(userData)
-        
-    // }
-
-    // async function loadPosts(){
-    //     try{
-    //         if(user){
-    //             const values = await axios.get('https://belifter-server.onrender.com/posts/all',
-    //                 {
-    //                     headers: {
-    //                         'Authorization': `Bearer ${user.token}`
-    //                     }
-    //                 })
-        
-    //                 setPosts(values.data)
-    //                 console.log(values.data)
-    //         }
-            
-    //     }catch(Err){
-    //         console.error(Err + 'Post')
-    //     }
-    // }
     
-
-
    
     return(
     <SafeAreaView style={{flex: 1}}>
@@ -94,7 +51,7 @@ export default function Comunidade(){
                     <TouchableOpacity>
                         <Bell color="white" weight="bold" size={28}/>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={()=> router.navigate("./messages")}>
                         <PaperPlaneTilt color="white" weight="bold" size={28}/>
                     </TouchableOpacity>
                 </View>

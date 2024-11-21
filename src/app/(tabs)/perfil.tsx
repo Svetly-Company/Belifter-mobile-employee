@@ -27,7 +27,14 @@ export default function Profile() {
         }
       })
   })
-  
+
+  // const arr = [{
+  //   id: 1,
+  //   content: 'why u so obssed',
+  //   mediaUrl: posts[0].mediaUrl
+  // }]
+
+
   useEffect(() => {
     if (userPost && userPost.data) {
       setPosts(userPost.data.posts)
@@ -118,7 +125,7 @@ export default function Profile() {
               <View className="ml-8 flex gap-2">
 
                 <View>
-                  <Text className="font-ibmMedium text-lg text-white">Luís Ricarda</Text>
+                  <Text className="font-ibmMedium text-lg text-white">{user.name}</Text>
                 </View>
 
                 <View>

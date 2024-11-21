@@ -42,7 +42,7 @@ export function Post({image, content, id, comments, refetch, author}:PostImagePr
                         transparent={true} 
                     >
                         <View className="flex-1 justify-end items-center" style={{backgroundColor: 'transparent'}}>
-                            <View className="bg-neutral-900 p-15 w-full h-5/6 rounded-t-3xl">
+                            <View className="bg-gray-800 p-15 w-full h-5/6 rounded-t-3xl">
                                 {
                                     comments ? <Comments idPost={id} comments={comments} refetch={refetch}></Comments>  : <View> </View>
 

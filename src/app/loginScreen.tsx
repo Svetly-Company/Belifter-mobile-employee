@@ -1,12 +1,17 @@
-import { Text, View, TextInput, TouchableOpacity, ToastAndroid, Image } from 'react-native';
-import { router } from 'expo-router';
-import { useState } from 'react';
-import axios from 'axios';
+import { SafeAreaView,ScrollView,StatusBar, StyleSheet, Text, useColorScheme, View, TextInput, TouchableOpacity, ImageBackground, Image, Pressable, ToastAndroid } from 'react-native';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { LinearGradient } from 'expo-linear-gradient';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { Link, router } from 'expo-router';
+import { useEffect, useState } from 'react';
+import axios, { AxiosError } from 'axios';
 import { setUserData } from '../storage/userData/setUserData';
 import { userStorage } from '../storage/zustand/store';
 
-export default function LoginScreen() {
-    
+
+export default function LoginScreen( ) {
+
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState<string>('');
     const [accessToken, setAccessToken] = useState<string>('')
@@ -81,55 +86,141 @@ export default function LoginScreen() {
 
     function navigateToforgotPass(){
         router.navigate("./forgotPass")
-    }
+      }
+  return (
+    <View style={styles.Main}>
+        
+        <Text style={styles.text}>Faça login na sua conta</Text>
 
-    return (
-        <View className='bg-gray-950 h-full p-8 w-full text-center items-center content-center-center flex'>
-            <Text className='color-white mx-4 self-start font-ibmMedium text-lg mt-5'>Faça login na sua conta</Text>
-            <View className='flex w-full justify-center items-center gap-2'>
-                <TextInput 
-                    className='h-10 w-full bg-red bg-neutral-900 rounded-2xl mt-8 color-white text-left p-2' 
-                    placeholder='Email' 
-                    placeholderTextColor={'#A5A5A5'}
-                    onChangeText={handleSetEmail}
-                    value={email}
-                />  
-                <TextInput 
-                    className='h-10 w-full bg-neutral-900 rounded-2xl mt-8 color-white text-left p-2'
-                    placeholder='Senha' 
-                    placeholderTextColor={'#A5A5A5'}
-                    secureTextEntry
-                    onChangeText={handleSetPassword}
-                    value={password}
-                />  
-                <View className='h-8 w-full text-right items-end'>
-                    <TouchableOpacity onPress={navigateToforgotPass}>
-                        <Text className='color-gray-100 font-ibmRegular text-sm '>Esqueci minha senha.</Text>
-                    </TouchableOpacity>
-                </View>
+        <View style={styles.inputView}>
+            <TextInput 
+                style={styles.input} 
+                placeholder='Email' 
+                placeholderTextColor={'#A5A5A5'}
+                onChangeText={handleSetEmail}
+                value={email}
+                
+            />  
+            <TextInput 
+                style={styles.input} 
+                placeholder='Senha' 
+                placeholderTextColor={'#A5A5A5'}
+                secureTextEntry
+                onChangeText={handleSetPassword}
+                value={password}
+                
+            />  
+            <View style={styles.bottomView}>
+                <TouchableOpacity onPress={navigateToforgotPass}>
+                    <Text style={styles.smallText}>Esqueci minha senha.</Text>
+                </TouchableOpacity>
             </View>
-            <View className='h-1/2 w-full text-center items-center justify-around flex mt-10'>
-                <View className='w-11/12'>
-                    <TouchableOpacity onPress={verifyUser}>
-                        <View className='bg-red-550 h-12 rounded-3xl flex items-center flex-row justify-center px-2'>
-                            <Text className='text-center font-ibmMedium align-middle color-white'>Entrar</Text>
-                        </View>
-                    </TouchableOpacity> 
-                </View>
-                <View className='h-10 w-full flex flex-row items-center text-center justify-center content-center'>
-                    <View className='h-px w-28 bg-white'></View>
-                    <View className='w-16 text-center items-center'><Text className='color-white text-2xl font-ibmMedium'>ou</Text></View>
-                    <View className='h-px w-28 bg-white'></View>
-                </View>
-                <View className='h-1/5 w-11/12 mt-'>
-                    <TouchableOpacity>
-                        <View className='bg-white w-full h-12 rounded-3xl flex items-center flex-row justify-between px-2'>
-                            <Text className='font-ibmMedium pl-24'>Login com o google</Text>
-                            <Image className="w-6 h-6 mr-4" source={require('../assets/google_icon.png')}></Image>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            </View>
+            
+            <TouchableOpacity 
+            onPress={verifyUser}
+            style={styles.registerButton}>
+                <Text className='text-white font-ibmMedium '>Entrar</Text>
+            </TouchableOpacity> 
+            
         </View>
+
+        
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+    Main: {
+        backgroundColor: '#0D0D0D',
+        height: '100%',
+        width: '100%',
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        display: 'flex',
+    },
+    text:{
+        color: 'white',
+        alignSelf: 'auto',
+        marginRight: 117,
+        fontSize: 17,
+    },
+    orView:{
+        width: 60,
+        textAlign: 'center',
+        alignItems: 'center'
+    },
+    input: {
+        height: 50,
+        width: 340,
+        backgroundColor: '#151415',
+        borderRadius: 15,
+        marginTop: 30,
+        color: '#fff',
+        textAlign: 'left',
+        padding: 6,
+        paddingLeft: 12
+    },
+    whiteLine: {
+        backgroundColor: 'white',
+        height: 1,
+        width: '30%'
+    },
+    registerButton: {
+        backgroundColor: '#F73E43',
+        width: 340,
+        height: 55,
+        borderRadius: 30,
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 40,
+        color: 'white',
+    },
+    inputView: {
+        height: 350,
+        display: 'flex',
+    },
+    smallText: {
+        color: '#DADADA',
+        marginTop: 15,
+        fontSize: 12,
+        paddingRight: 10
+    },
+    bottomView: {
+        height:30,
+        textAlign: 'right',
+        alignItems: 'flex-end',
+    },
+    middle: {
+        height: 40,
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        textAlign:'center',
+        justifyContent:'center'
+    },
+    or:{
+        color:'white',
+        fontSize: 21,
+    },
+    bottom: {
+        height: '20%',
+        marginTop: 90
+    },
+    googleButton: {
+        backgroundColor: 'white',
+        width: 312,
+        height: 45,
+        borderRadius: 30,
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    googleText: {
+        fontSize: 16,
+        fontWeight: '600'
+    }
+});
+

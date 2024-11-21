@@ -12,6 +12,7 @@ export default function RegisterScreen(){
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState<string>('');
   const [name, setName] = useState('');
+  const [profilePicture, setProfilePicture] = useState('none');
 
   function handleCheckBox(){
     setChecked(!isChecked)
@@ -28,6 +29,11 @@ export default function RegisterScreen(){
   function handleSetName(text: string){
     setName(text)
   }
+
+  function handleSetProfilePicture(text: string){
+    setProfilePicture(text)
+  }
+  
   async function registerUser(){
     try{
         if(!isChecked){
@@ -38,7 +44,8 @@ export default function RegisterScreen(){
         const val = await axios.post('https://belifter-server.onrender.com/account/create', {
             name,
             email,
-            password
+            password,
+            profilePicture
         })
         .then((res) => {
             if(res.data.status){
@@ -59,8 +66,10 @@ export default function RegisterScreen(){
     }
   }
   return (
-    <View className="flex-1 bg-gray-950 p-4">
-      <Text className="font-ibmMedium text-xl text-white pl-6 pt-8 mt-5">Criar uma nova conta</Text>
+    <View className="flex-1 bg-gray-950 p-5 justify-center">
+
+      
+      <Text className="font-ibmMedium text-xl text-white pl-6 pt-8 mt-2">Criar uma nova conta</Text>
       <View className="mx-4 mt-8">
         <TextInput className="w-full bg-neutral-900 px-4 mb-11 py-2 rounded-2xl color-gray-200" 
         placeholderTextColor={"#A5A5A5"}
@@ -76,8 +85,8 @@ export default function RegisterScreen(){
         />
         <TextInput className="w-full bg-neutral-900 px-4 mb-11 py-2 rounded-2xl color-gray-200"
         placeholderTextColor={"#A5A5A5"}
-        placeholder="Senha"
         secureTextEntry
+        placeholder="Senha"
         onChangeText={handleSetPassword}
         value={password}
         />
@@ -85,7 +94,7 @@ export default function RegisterScreen(){
           <Checkbox 
           className="ml-4 border-1 mr-2"
           onValueChange={handleCheckBox}
-          color={isChecked ? '#00BF63' : undefined}
+          color={isChecked ? '#F73E43' : undefined}
           value={isChecked}
           />
           <Text style={{color: '#CDCDCD'}}>Eu aceito os 
@@ -94,11 +103,11 @@ export default function RegisterScreen(){
           </Text>
         </View>
         
-        <TouchableOpacity style={{backgroundColor: "#F73E43", height: 46, alignItems:"center", justifyContent: "center", marginTop: 28, borderRadius: 40}} onPress={registerUser}>
-          <Text className="text-white">Avançar</Text>
+        <TouchableOpacity onPress={registerUser} style={{backgroundColor: "#F73E43", height: 46, alignItems:"center", justifyContent: "center", marginTop: 28, borderRadius: 40}}>
+          <Text className="text-white font-ibmMedium">Avançar</Text>
         </TouchableOpacity>
 
-        <View className="flex-row items-center justify-around gap-22 w-full mt-28 ">
+        {/* <View className="flex-row items-center justify-around gap-22 w-full mt-28 ">
           <View className="h-px bg-white w-40"></View>
           <Text className="text-white text-sm">OU</Text>
           <View className="h-px bg-white w-40"></View>
@@ -107,7 +116,7 @@ export default function RegisterScreen(){
         <TouchableOpacity style={{backgroundColor: "#ffffff", flexDirection: 'row', height: 40, alignItems:"center", justifyContent: "center", marginTop: 80, borderRadius: 40}}>
           <Image className="w-6 h-6 mr-4" source={require('../assets/google_icon.png')}></Image>
           <Text className="font-medium">Continuar com o Google</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
       </View>
     </View>

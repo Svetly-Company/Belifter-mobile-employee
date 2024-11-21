@@ -1,7 +1,7 @@
 import { View, Text, Image, TextInput } from 'react-native';
 import { HeartStraight } from "phosphor-react-native";
 import { Comment} from '../Comment'
-import { Subcomment } from '../subComment'
+import { Subcomment } from '../SubComment'
 import { FlatList } from 'react-native';
 import { userStorage } from '../../storage/zustand/store';
 import axios from 'axios';

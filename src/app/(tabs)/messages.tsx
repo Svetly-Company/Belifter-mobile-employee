@@ -57,7 +57,7 @@ export default function Mensagens(){
                       <ActivityIndicator size="large" color="#F73E43" className="mt-72"/>
                     :
                     cont.map((x) => (
-                      <Link href={{pathname: "(chat)/[chatid]", params: {chatid: x.id}}} asChild key={x.id}>
+                      <Link href={{pathname: "../(chat)/[chatid]", params: {chatid: x.id}}} asChild key={x.id}>
                       <TouchableOpacity>
                         <Contacts name={x.name} lastMessage={x.lastMessageContent} mediaUrl={x.mediaUrl} notify/>
                       </TouchableOpacity>

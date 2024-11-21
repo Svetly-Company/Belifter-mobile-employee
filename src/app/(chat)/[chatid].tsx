@@ -4,11 +4,11 @@ import { router, useLocalSearchParams } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { CaretLeft, PaperPlaneRight, Smiley } from 'phosphor-react-native'
 import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler'
-import { MessageBox } from '../../../components/MessageBox'
+import { MessageBox } from '../../components/MessageBox'
 import EmojiPicker, { pt, EmojiType } from 'rn-emoji-keyboard'
-import { getUserData } from '../../../storage/userData/getUserData'
+import { getUserData } from '../../storage/userData/getUserData'
 import axios from 'axios'
-import Loading from '../../../components/Loading'
+import Loading from '../../components/Loading'
 
 export default function Chat() {
   
@@ -131,9 +131,8 @@ export default function Chat() {
 
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View className="bg-gray-950 flex-1">
-        <View className="flex ">
+    <View className='bg-gray-950 h-full pt-10 flex'>
+        <View className="flex">
           <View className="bg-gray-950" style={styles.borderStyle}>
                 {
                   loading ? 
@@ -213,7 +212,6 @@ export default function Chat() {
             </TouchableOpacity>
         </View>
       </View>
-    </SafeAreaView>
   )
 }
 

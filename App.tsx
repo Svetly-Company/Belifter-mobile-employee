@@ -27,6 +27,7 @@ import {
   IBMPlexSans_700Bold_Italic,
 } from '@expo-google-fonts/ibm-plex-sans';
 import Comunidade from './src/app/(tabs)/comunidade';
+import LoadingScreen from './src/app/loading';
 
 export default function App() {
   const [fontsLoaded] = useFonts(
@@ -39,10 +40,13 @@ export default function App() {
   )
   return (
     <>
+    <>
     <StatusBar backgroundColor={'#111112'} style="light" translucent/>
     {
-      fontsLoaded? <Comunidade /> : ''
+      fontsLoaded? <Comunidade /> : <LoadingScreen />
     }
+    
+    </>
     
     </>
   );

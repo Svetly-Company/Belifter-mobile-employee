@@ -31,10 +31,13 @@ export function StudentBoxModel( {title, desc, status = false } : boxModelParams
 
               <View className="flex-row p-2 bg-gray-400 rounded-full">
                 <TouchableOpacity className="">
-                  <Link href={"/treino"}>
+                  {
+                    status ?
+                  <Link href={{pathname:"/../(treino)/[matricula]", params:{matricula: desc}}}>
                     <CaretRight color="white" size={22}/>
-                  </Link>
-                  
+                  </Link> :
+                  <CaretRight color="white" size={22}/>
+                  }
                 </TouchableOpacity> 
               </View>
             </View>

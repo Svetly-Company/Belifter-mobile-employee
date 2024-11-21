@@ -36,8 +36,6 @@ export default function TabLayout(){
       },
       tabBarActiveTintColor: "#fff",
       
-      
-  
     })}>
       <Tabs.Screen name="home"  options={{
         tabBarIcon: ({size, color, focused}) => (
@@ -58,7 +56,7 @@ export default function TabLayout(){
           }
         }
       }/>
-      <Tabs.Screen name="treino" options={{
+      <Tabs.Screen name="clientes" options={{
         tabBarIcon: ({size, color, focused}) => (
           <Barbell size={size} color={color} weight="bold"/>
         ),
@@ -86,11 +84,6 @@ export default function TabLayout(){
           return <TabButton {...props}/>
         }
       }}/>
-      <Tabs.Screen name="(chat)/[chatid]" options={{
-        tabBarStyle: {display: "none"},
-        href: null,
-      }}/>
-
     </Tabs>
     </QueryClientProvider>
   )

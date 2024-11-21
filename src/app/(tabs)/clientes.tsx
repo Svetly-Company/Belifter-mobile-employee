@@ -5,9 +5,11 @@ import { StudentBoxModel } from "../../components/StudentBoxModel";
 import { userStorage } from "../../storage/zustand/store";
 
 
-export default function Treino(){
+export default function Clientes(){
 
     const user = userStorage((state) => state.user)
+
+    const arr = [{nome: "Julio", desc:20795, status: true}, {nome: "Lilian", desc:20755, status: true},{nome: "Maria", desc:20785, status: false}, {nome: "Pedro", desc:20095, status: false}, {nome: "João", desc:20395, status: true}]
 
     return(
       <SafeAreaView style={{flex: 1}}>
@@ -18,18 +20,9 @@ export default function Treino(){
               <View className="flex w-full">
                 <Text className="text-white text-3xl mt-5 ml-6">Alunos</Text>
                 <View className="mt-5 flex justify-center items-center">
-                  <StudentBoxModel title="Name" desc="??????" status/>
-                  <StudentBoxModel title="Name" desc="??????"/>
-                  <StudentBoxModel title="Name" desc="??????" status/>
-                  <StudentBoxModel title="Name" desc="??????"/>
-                  <StudentBoxModel title="Name" desc="??????" status/>
-                  <StudentBoxModel title="Name" desc="??????" status/>
-                  <StudentBoxModel title="Name" desc="??????" status/>
-                  <StudentBoxModel title="Name" desc="??????"/>
-                  <StudentBoxModel title="Name" desc="??????" status/>
-                  <StudentBoxModel title="Name" desc="??????"/>
-                  <StudentBoxModel title="Name" desc="??????" status/>
-                  <StudentBoxModel title="Name" desc="??????" status/>
+                  {arr.map((x) => (
+                    <StudentBoxModel title={x.nome} desc={x.desc.toString()} status={x.status} key={x.desc}/>
+                  ))}
                 </View>
               </View>
 
