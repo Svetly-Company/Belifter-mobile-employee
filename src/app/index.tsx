@@ -23,7 +23,7 @@ export default function LoginOptions(  navigation : any  ) {
                   
                   </TouchableOpacity>
               </Link>
-            <Link href={"/loginScreen"}>
+            <Link href={"/createExercise"}>
               <Text className='color-white font-ibmMedium'>Já tenho uma conta</Text>
             </Link>
           </View>
