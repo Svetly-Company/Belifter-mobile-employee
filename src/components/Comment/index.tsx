@@ -16,7 +16,7 @@ export function Comment({comment, author}:CommentProps){
 
                 <View className="flex gap-3 ml-10 mt-5">
 
-                    <Image source={require('../../assets/moca.jpg')} className="w-12 h-12 rounded-full" />
+                    <Image source={require('../../assets/moca.png')} className="w-12 h-12 rounded-full" />
                   
                 </View>
                     

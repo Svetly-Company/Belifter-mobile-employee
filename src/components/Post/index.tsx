@@ -62,7 +62,7 @@ export function Post({image, content, id, comments, refetch, author}:PostImagePr
     <View className="mt-8 mx-2 p-6 flex flex-col bg-[#151415] rounded-3xl">
         <View className="flex-row justify-between items-center">
             <View className="flex flex-row gap-3 items-center">
-                <Image source={require('../../assets/moca.jpg')} className="w-12 h-12 rounded-full" />
+                <Image source={require('../../assets/moca.png')} className="w-12 h-12 rounded-full" />
                 <View>
                     <Text className="text-white text-base font-ibmRegular">{author}</Text>
                     <View className="flex flex-row justify-between mt-2 items-center">

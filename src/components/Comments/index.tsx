@@ -105,7 +105,7 @@ export function Comments({idPost, comments,  refetch}:CommentsProp){
 
             <View className='h-1/4 position: sticky bg-gray-800 flex flex-row content-between w-full'>
                 <View className='ml-4 mt-12'>
-                    <Image source={require('../../assets/moca.jpg')} className="w-12 h-12 rounded-full" />
+                    <Image source={require('../../assets/moca.png')} className="w-12 h-12 rounded-full" />
                     
                 </View>
                 <View className='ml-3 mt-12'>

@@ -76,7 +76,7 @@ export default function Profile() {
 
             <View className="flex flex-row">
               <View className=" items-center w-2/6 ">
-                <Image source={require('../../assets/moca.jpg')} className="w-24 h-24 rounded-full mr-5" />
+                <Image source={require('../../assets/moca.png')} className="w-24 h-24 rounded-full mr-5" />
               </View>
 
               <View className="flex flex-row gap-5 py-4">

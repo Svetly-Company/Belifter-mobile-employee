@@ -77,6 +77,7 @@ export default function Chat() {
       setUser(userData)
       setChatName(name)
       setChatMedia(media)
+      console.log(media)
       setLoading(false)
     }catch(err){
       setMessages([])

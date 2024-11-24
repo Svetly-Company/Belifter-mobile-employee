@@ -187,7 +187,7 @@ export default function ProfileAcademy(){
           <View className="flex-1">
             <View className="items-center justify-center flex-1">
               <View>
-                <Image source={require("../assets/moca.jpg")} style={{width: 120, height: 120, borderRadius: 100}}/>
+                <Image source={require("../assets/moca.png")} style={{width: 120, height: 120, borderRadius: 100}}/>
                 <View className="bg-[#F73E43] w-10 h-10 items-center justify-center rounded-full absolute bottom-0 right-0">
                   <TouchableOpacity onPress={() => setEditable(!editable)}>
                     <NotePencil color="white"></NotePencil>

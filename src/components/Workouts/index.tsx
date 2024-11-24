@@ -15,7 +15,8 @@ type exerciseProps = {
 }
 
 type workoutProps = {
-    id:number
+    id:string,
+    matricula:string,
     name:string,
     desc:string,
     image?:string,
@@ -24,7 +25,7 @@ type workoutProps = {
 }
 
 
-export function Workouts({name, desc, image, exercises, onClick}:workoutProps){
+export function Workouts({name, desc, image, exercises, onClick, id, matricula}:workoutProps){
 
     const [toggle, setToggle] = useState(false)
     
@@ -33,6 +34,8 @@ export function Workouts({name, desc, image, exercises, onClick}:workoutProps){
     }
 
     const items = exercises?.length
+
+    const route = matricula + id
 
     return(
         <View className='flex mx-2 rounded-3xl p-5 bg-gray-800 mt-5'>
@@ -61,11 +64,11 @@ export function Workouts({name, desc, image, exercises, onClick}:workoutProps){
           {
             toggle ?
           <View className="flex items-center justify-center w-full mt-5 p-2">
-            <Link href={{pathname: "(exercises)/[id]", params: id}} className="bg-red-550 rounded-full flex w-full justify-center items-center text-center p-2">
+            <Link href={{pathname: "(exercises)/[id]", params: {id: route}}} className="bg-red-550 rounded-full flex w-full justify-center items-center text-center p-2">
                     <Text className="font-ibmMedium text-xl text-gray-300">Adicionar Exercicios</Text>
             </Link>
             <View className="flex flex-row items-center justify-center w-full mt-5 gap-2 px-1">
-                <Link href={{pathname: "(definitions)/[id]", params: id} } className="bg-gray-600 rounded-full flex w-1/2 justify-center text-center items-center p-2" >
+                <Link href={{pathname: "(definitions)/[id]", params: {id: route}} } className="bg-gray-600 rounded-full flex w-1/2 justify-center text-center items-center p-2" >
                     <Text className="font-ibmMedium text-xl text-gray-300">Definições</Text>
                 </Link>
                 <TouchableOpacity onPress={() => onClick()} style={{width:"50%"}}>

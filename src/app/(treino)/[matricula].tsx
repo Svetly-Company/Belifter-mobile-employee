@@ -1,11 +1,12 @@
 import { View, Text, Image, Modal, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { CaretCircleLeft, CaretCircleRight, CaretDown, CaretUp } from 'phosphor-react-native'
-import { Link } from 'expo-router'
+import { Link, useLocalSearchParams } from 'expo-router'
 import { Gesture, GestureDetector, ScrollView } from 'react-native-gesture-handler'
 import { Workouts } from '../../components/Workouts'
 import GestureRecognizer from 'react-native-swipe-gestures'
+import { matriculaTreino } from '../../classes/Treinos/Improvisação'
 
 type exerciseProps = {
   id:number,
@@ -21,18 +22,19 @@ type treinoProps = {
 }
 
 export default function Treino() {
+  
+  const { matricula } = useLocalSearchParams()
+
+  const meuTreino = matriculaTreino.find((element: {matricula: number}) => element.matricula.toString() == matricula )?.treinos ?? []
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const [treinos, setTreinos] = useState<treinoProps[]>([{id: 1, name: "Treino (A)", desc: "Abdomen, Peito e Triceps",
-    arr: [{id: 1 ,name:"Cruxifixo", volume: 4,  image: undefined}, {id: 2, name:"Triceps Francês", volume: 4,  image: undefined},
-    {id: 4, name:"Abdominal", volume: 3,  image: undefined}]}, {id: 2, name: "Treino (B)", desc: "Costas, Biceps e Ombro",
-    arr: [{id: 1 ,name:"Remada", volume: 4,  image: undefined}, {id: 2, name:"Rosca Scott", volume: 4,  image: undefined},
-    {id: 4, name:"Elevação Lateral", volume: 3,  image: undefined}]}, {id: 3, name: "Treino (C)", desc: "Quadriceps, Posterior e Gluteo"}])
+  const [treinos, setTreinos] = useState<treinoProps[]>(meuTreino)
 
   const [selectedId, setSelectedId] = useState<number>()
 
   function handleClick(id:number){
+    console.log(matricula)
     setModalVisible(true)
     setSelectedId(id)
   }
@@ -59,7 +61,7 @@ export default function Treino() {
           </View>
           {
             treinos.map((treino) => (
-              <Workouts onClick={() => handleClick(treino.id)} id={treino.id} name={treino.name} desc={treino.desc} exercises={treino.arr} key={treino.id}/>
+              <Workouts onClick={() => handleClick(treino.id)} matricula={matricula?.toString() ?? ""} id={treino.id.toString()} name={treino.name} desc={treino.desc} exercises={treino.arr} key={treino.id}/>
             ))
           }
         </ScrollView>

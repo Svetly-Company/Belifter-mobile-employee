@@ -1,16 +1,22 @@
 import { View, Text, Modal, TouchableOpacity, Image } from 'react-native'
 import React, { useState } from 'react'
-import { Link, router } from 'expo-router'
+import { Link, router, useLocalSearchParams } from 'expo-router'
 import { CaretCircleLeft, CaretCircleRight, PencilSimple } from 'phosphor-react-native'
 import { TextInput } from 'react-native'
+import { tempo, editTempo } from '../../classes/Treinos/Improvisação'
 
 export default function Definitions() {
 
+  const { id } = useLocalSearchParams()
+
+  const matricula = id?.slice(0, 5)
+
   const [modalVisible, setModalVisible] = useState<boolean>(false)
-  const [seconds, setSeconds] = useState("0")
+  const [seconds, setSeconds] = useState(tempo)
 
   function handleChangeInput(text : string){
     const numericVal = text.replace(/[^0-9]/g, "")
+    editTempo(numericVal)
     setSeconds(numericVal)
   }
   return (
@@ -18,7 +24,7 @@ export default function Definitions() {
       <View className='bg-gray-950 h-full pt-14 flex p-5'>
           <View className='flex flex-row w-full items-center gap-4'>
               <View className='bg-white h-4 w-4 rounded-full absolute left-3'/>
-              <Link href="/../clientes">
+              <Link href={{pathname: "/(treino)/[matricula]", params: {matricula: id?.slice(0,5)}}}>
                 <CaretCircleLeft size={32} color='#302C30' weight='fill'/>
               </Link>
               <Text className='font-ibmMedium text-xl text-gray-300'>Configurações de Treinamento</Text>
