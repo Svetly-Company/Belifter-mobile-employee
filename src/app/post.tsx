@@ -25,9 +25,6 @@ export default function PostForm() {
     setUser(userData)
   }
 
-
-  const imgDir = FileSystem.documentDirectory + 'images/';
-
   const [changeEvent, setChangeEvent] = useState<boolean>(false)
   const [hours, setHours] = useState('')
   const [weight, setWeight] = useState('0')
@@ -56,7 +53,7 @@ export default function PostForm() {
     })
 
   function handleSentModal() {
-    setModalVisible(false)
+    setModalVisible(false) 
   }
 
   function handleChangeValues(time : boolean) {

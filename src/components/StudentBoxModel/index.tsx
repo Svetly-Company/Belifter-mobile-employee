@@ -7,10 +7,11 @@ interface boxModelParams {
     title: string,
     desc?: string,
     status?: boolean,
-    image: string
+    image: string,
+    tipoTreino: boolean
 }
 
-export function StudentBoxModel( {title, desc, status = false, image } : boxModelParams) {
+export function StudentBoxModel( {title, desc, status = false, image, tipoTreino } : boxModelParams) {
     return(
       <View className={"flex flex-wrap justify-center bg-gray-800 mt-2 px-6 rounded-3xl h-32 w-11/12"}>
         <View className="flex flex-row items-center">
@@ -28,10 +29,14 @@ export function StudentBoxModel( {title, desc, status = false, image } : boxMode
           <View className="flex-row p-2 bg-gray-400 rounded-full">
             <TouchableOpacity className="">
               {
-                status ?
+                status ? tipoTreino ? 
               <Link href={{pathname:"/../(treino)/[matricula]", params:{matricula: desc}}}>
                 <CaretRight color="white" size={22}/>
               </Link> :
+              <Link href={{pathname:"/../(dieta)/[matricula]", params:{matricula: desc}}}>
+                <CaretRight color="white" size={22}/>
+              </Link>
+              :
               <CaretRight color="white" size={22}/>
               }
             </TouchableOpacity> 

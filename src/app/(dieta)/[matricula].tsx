@@ -1,35 +1,30 @@
 import { View, Text, Image, Modal, TouchableOpacity } from 'react-native'
 import { useEffect, useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { CaretCircleLeft, CaretCircleRight, CaretDown, CaretLeft, CaretUp, MagnifyingGlass, Plus, Image as ImageP } from 'phosphor-react-native'
+import { CaretCircleLeft, CaretLeft, Plus, Image as ImageP, Sun } from 'phosphor-react-native'
 import { Link, useLocalSearchParams } from 'expo-router'
-import { Gesture, GestureDetector, ScrollView, TextInput } from 'react-native-gesture-handler'
-import { Workouts } from '../../components/Workouts'
+import { ScrollView, TextInput } from 'react-native-gesture-handler'
+import { Diet } from '../../components/Diet'
 import GestureRecognizer from 'react-native-swipe-gestures'
-import { exercicios, matriculaTreino, setExercicios } from '../../classes/Treinos/Improvisação'
-import Exercise from '../../components/Exercise'
-import * as ImagePicker from 'expo-image-picker'
-import * as FileSystem from 'expo-file-system'
+import { comidas, matriculaDieta, setComidas } from '../../classes/Treinos/Improvisação'
+import Food from '../../components/Food'
 
-type exerciseProps = {
+type foodProps = {
   id:number,
   name:string,
-  volume:number,
-  image?:string
+  grams:string,
 }
-type treinoProps = {
+type dietProps = {
   id:number,
   name:string,
-  desc:string,
-  arr?: exerciseProps[]
+  arr: foodProps[]
 }
 
-export default function Treino() {
+export default function Dieta() {
   
   
   const { matricula } = useLocalSearchParams()
   
-  const meuTreino:treinoProps[] = matriculaTreino.find((element: {matricula: number}) => element.matricula.toString() == matricula )?.treinos ?? []
+  const minhaDieta:dietProps[] = matriculaDieta.find((element: {matricula: number}) => element.matricula.toString() == matricula )?.dietas ?? []
   
   const [image, setImage] = useState("");
   
@@ -41,7 +36,7 @@ export default function Treino() {
   
   const [modalVisible, setModalVisible] = useState(false);
   
-  const [treinos, setTreinos] = useState<treinoProps[]>(meuTreino)
+  const [dietas, setDietas] = useState<dietProps[]>(minhaDieta)
   
   const [selectedId, setSelectedId] = useState<number>()
   
@@ -50,51 +45,12 @@ export default function Treino() {
   const [volumeEx, setVolumeEx] = useState("")
   
   const [name, setName] = useState("")
-  
-  const [desc, setDesc] = useState("")
-
-  async function pickImage() {
-     let res = await ImagePicker.launchImageLibraryAsync({
-       mediaTypes: ImagePicker.MediaTypeOptions.All,
-       allowsEditing: true,
-       aspect: [20, 20],
-       quality: 1
-     })
- 
-     if (!res.canceled) {
-       setImage(res.assets[0].uri)
-     }
-   }
-
-   type img = {
-    filename: string,
-    imgUrl: string
-   }
- 
-   async function uploadImage(uri : string):Promise<img>{
-     try{
-       const mediaUlr = await FileSystem.uploadAsync('https://belifter-server.onrender.com/upload/sendlink', image, {
-         httpMethod: 'POST',
-         uploadType: FileSystem.FileSystemUploadType.MULTIPART,
-         fieldName: 'file'
-       }).catch((err) => {throw err})
-     
-     return JSON.parse(mediaUlr.body)
- 
-     }catch(err){
-       throw err
-     }
-  }
 
   async function handleSalvarEx(){
-    if(image && nameEx && volumeEx){
-      try{
-        const mediaUrl = await uploadImage(image)
-        console.log(mediaUrl.imgUrl)
-        let arr = exercicios
-        arr.push({id: (arr.length + 1), name: nameEx, volume: (parseInt(volumeEx) ?? 0), image: mediaUrl.imgUrl})
-        setExercicios(arr)
-      }catch(err) { throw err }
+    if(nameEx && volumeEx){
+      let arr = comidas
+      arr.push({id: (arr.length + 1), name: nameEx, grams: volumeEx + "g"})
+      setComidas(arr)
       setNameEx("")
       setVolumeEx("")
       setImage("")
@@ -109,49 +65,48 @@ export default function Treino() {
   }
 
   function handleDelete(){
-    let arr = treinos
+    let arr = dietas
     let indexOf
-    treinos.forEach((value, index) => {value.id == selectedId ? indexOf = index : null})
+    dietas.forEach((value, index) => {value.id == selectedId ? indexOf = index : null})
     delete arr[indexOf ?? -1]
-    setTreinos(arr)
+    setDietas(arr)
     setModalVisible(false)
   }
 
   function handleSalvar(){
-    let arr = treinos
-    let indexOfTreino
-    let indexOfExercise
-    treinos.forEach((value, index) => {value.id == selectedId ? indexOfTreino = index : null})
-    exerciseList.forEach((value, index) => {value.id == selectedIdExercises ? indexOfExercise = index : null})
-    const id = ((arr[indexOfTreino ?? -1].arr?.length ?? -2) +1)
-    const name = exerciseList[indexOfExercise ?? -1].name
-    const volume = exerciseList[indexOfExercise ?? -1].volume
-    const image = exerciseList[indexOfExercise ?? -1].image
+    let arr = dietas
+    let indexOfDiet
+    let indexOfFood
+    dietas.forEach((value, index) => {value.id == selectedId ? indexOfDiet = index : null})
+    foodList.forEach((value, index) => {value.id == selectedIdFoods ? indexOfFood = index : null})
+    const id = ((arr[indexOfDiet ?? -1].arr?.length ?? -2) +1)
+    const name = foodList[indexOfFood ?? -1].name
+    const grams = foodList[indexOfFood ?? -1].grams
 
-    arr[indexOfTreino ?? -1].arr?.push({id: id, image: image, name: name, volume: volume})
-    setTreinos(arr)
+    arr[indexOfDiet ?? -1].arr?.push({id: id, name: name, grams: grams})
+    setDietas(arr)
     setModalVisible2(false)
   }
 
   function handleAddTreino(){
-    if(name && desc){
-      let arr = treinos
-      arr.push({id: (arr.length + 1), name: name, desc: desc, arr: [] })
-      setTreinos(arr)
+    if(name){
+      let arr = dietas
+      arr.push({id: (arr.length + 1), name: name, arr: [] })
+      setDietas(arr)
     }
     setModalVisible1(false)
   }
 
-  const [exerciseList, setExerciseList] = useState<exerciseProps[]>(exercicios)
+  const [foodList, setFoodList] = useState<foodProps[]>(comidas)
 
   useEffect(() => {
-    setExerciseList(exercicios)
-  }, [exercicios])
+    setFoodList(comidas)
+  }, [comidas])
 
-  const [selectedIdExercises, setSelectedIdExercises] = useState(-1)
+  const [selectedIdFoods, setSelectedIdFoods] = useState(-1)
 
   function handleSelect(id: number){
-        setSelectedIdExercises(id)
+        setSelectedIdFoods(id)
   }
 
   interface ICreateInput {
@@ -174,7 +129,7 @@ export default function Treino() {
         <View className='flex absolute right-6 bottom-5 z-50'>
           <TouchableOpacity onPress={() => setModalVisible1(true)} style={{display: "flex",flexDirection:"row", backgroundColor:"#f73e43", borderRadius: 100, padding: 15, justifyContent: "center", alignItems:"center", gap: 4}}>
             <Text className='font-ibmMedium text-xl text-gray-300'>
-              Novo Treino
+              Nova Dieta
             </Text>
             <Plus size={22} color='#d1d5db' weight='bold'/>
           </TouchableOpacity>
@@ -188,8 +143,8 @@ export default function Treino() {
               <Text className='font-ibmMedium text-xl text-gray-300'>Administrar cliente</Text>
           </View>
           {
-            treinos.map((treino) => (
-              <Workouts onClickAdd={() => {setSelectedId(treino.id); setModalVisible2(true)}} onClickDel={() => handleClick(treino.id)} matricula={matricula?.toString() ?? ""} id={treino.id.toString()} name={treino.name} desc={treino.desc} exercises={treino.arr} key={treino.id}/>
+            dietas.map((dieta) => (
+              <Diet onClickAdd={() => {setSelectedId(dieta.id); setModalVisible2(true)}} onClickDel={() => handleClick(dieta.id)} matricula={matricula?.toString() ?? ""} id={dieta.id.toString()} name={dieta.name} foods={dieta.arr} key={dieta.id}/>
             ))
           }
         </ScrollView>
@@ -208,12 +163,12 @@ export default function Treino() {
               <Text className='font-ibmMedium text-xl text-gray-300 m-3 p-7 w-full text-center border-b border-[#322E33]'>Descartar</Text>
               <View className='flex flex-col p-7 items-center justify-center'>
                 <Text className='font-ibmMedium text-lg text-gray-300 w-full text-center'>Tem certeza de que quer descartar</Text>
-                <Text className='font-ibmMedium text-lg text-gray-300 w-full text-center'>esse treinamento?</Text>
+                <Text className='font-ibmMedium text-lg text-gray-300 w-full text-center'>essa dieta?</Text>
               </View>
               <View className='flex gap-3'>
                 <TouchableOpacity onPress={() => handleDelete()}>
                   <View className="bg-red-550 rounded-full flex w-full justify-center text-center items-center p-2 px-28">
-                    <Text className="font-ibmMedium text-xl text-gray-300">Descartar Treino</Text>
+                    <Text className="font-ibmMedium text-xl text-gray-300">Descartar Dieta</Text>
                   </View> 
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => setModalVisible(false)}>
@@ -236,16 +191,9 @@ export default function Treino() {
             <TextInput
               className="h-10 border-red-550 rounded-md border mb-5 px-3 text-neutral-400"
               placeholderTextColor={"#fafafaa4"}
-              placeholder="Insira o nome do treino"
+              placeholder="Insira o nome do dieta"
               value={name}
               onChangeText={setName}
-              />
-            <TextInput
-              className="h-10 border-red-550 rounded-md border mb-5 px-3 text-neutral-400"
-              placeholderTextColor={"#fafafaa4"}
-              placeholder="Insira a descrição do treino"
-              value={desc}
-              onChangeText={setDesc}
               />
             <TouchableOpacity style={{backgroundColor: '#F73E43', width: 240, height: 40, borderRadius: 4, alignItems: "center", justifyContent: 'center'}} onPress={() => handleAddTreino()}>
               <Text className="font-ibmMedium font-bold text-white">Concluido</Text>
@@ -281,7 +229,7 @@ export default function Treino() {
                       </View>
                       <View className="flex flex-row">
                           <View className="">
-                              <Text className="font-ibmMedium text-xl text-white">Adicionar exercício</Text>
+                              <Text className="font-ibmMedium text-xl text-white">Adicionar Alimentos</Text>
                           </View>
                       </View>
                       </View>
@@ -294,16 +242,16 @@ export default function Treino() {
                       </View>
                   </View>
               </View>
-              <View className='flex px-8 justify-center'>
-                  <Text className='font-ibmMedium text-xl px-4 text-white'>Exercicios</Text>
+              <View className='flex px-8 justify-center mb-24'>
+                  <Text className='font-ibmMedium text-xl px-4 text-white'>Alimentos</Text>
                   {
-                      exerciseList.map(x => (
+                      foodList.map(x => (
                           <TouchableOpacity onPress={() => handleSelect(x.id)} key={x.id}>
                               <View className='px-5 border-b-2 border-gray-400 flex flex-row items-center gap-3 py-1'>
                                   {
-                                      selectedIdExercises == x.id ? <View className='h-16 w-1 mt-3 bg-red-550'/> : ""
+                                      selectedIdFoods == x.id ? <View className='h-16 w-1 mt-3 bg-red-550'/> : ""
                                   }
-                                  <Exercise name={x.name} volume={x.volume} image={x.image} />
+                                  <Food name={x.name} grams={x.grams}/>
                               </View>
                           </TouchableOpacity>
                       ))
@@ -318,7 +266,7 @@ export default function Treino() {
       visible={modalVisible3}
       onRequestClose={() => setModalVisible3(!modalVisible3)}
       >
-        <ScrollView className="bg-[#151415] flex-1 flex flex-col gap-2">
+        <ScrollView className="bg-gray-950 flex-1 flex flex-col gap-2">
           <View className="p-8 flex flex-col rounded-b-3xl justify-between min-h-screen">
               <View className="flex h-min flex-row items-center text-center gap-4">
                   <View className="bg-[#302C30] p-2 rounded-full">
@@ -326,31 +274,23 @@ export default function Treino() {
                             <CaretLeft size={16} color="#fff" />
                     </TouchableOpacity> 
                   </View>
-                  <Text className="font-ibmMedium text-xl text-white">Criar Exercício</Text>
+                  <Text className="font-ibmMedium text-xl text-white">Criar Alimento</Text>
               </View>
               <View className='flex justify-center items-center w-full gap-4'>
-                {
-                  image ? <Image source={{uri: image}} className='rounded-full h-36 w-36'/> :
-                  <View className='bg-[#6D6666] p-8 rounded-full'>
-                      <ImageP size={64} color='#fff' />
+              <View className='bg-gray-800 p-8 rounded-full'>
+                      <Sun size={64} color='yellow' />
                   </View>
-                }
-                  <TouchableOpacity onPress={pickImage}>
-                          <Text className='text-[#F73E43] text-xl'>Adicionar imagem</Text>
-                  </TouchableOpacity>
               </View>
-              <View className='flex gap-6'>
-                <View className='flex'>
-                  <Text className='font-semibold text-[#DADADA] text-xl'>Nome</Text>
-                  <TextInput placeholder="Nome do Exercicio" placeholderTextColor="#ADADAD" value={nameEx} onChangeText={setNameEx} className="border-b-[1px] text-lg border-b-white text-[#ADADAD]" />
+                <View className='flex gap-6'>
+                  <View className='flex'>
+                    <Text className='font-semibold text-[#DADADA] text-xl'>Nome</Text>
+                    <TextInput placeholder="Nome do Alimento" placeholderTextColor="#ADADAD" value={nameEx} onChangeText={setNameEx} className="border-b-[1px] text-lg border-b-white text-[#ADADAD]" />
+                  </View>
+                  <View className='flex'>
+                    <Text className='font-semibold text-[#DADADA] text-xl'>Gramas</Text>
+                    <TextInput keyboardType='numeric' placeholder="Quantidade de Gramas no Alimento" placeholderTextColor="#ADADAD" value={volumeEx} onChangeText={setVolumeEx} className="border-b-[1px] text-lg border-b-white text-[#ADADAD]" />
+                  </View>
                 </View>
-                <View className='flex'>
-                  <Text className='font-semibold text-[#DADADA] text-xl'>Volume</Text>
-                  <TextInput keyboardType='numeric' placeholder="Quantidade de Repetições" placeholderTextColor="#ADADAD" value={volumeEx} onChangeText={setVolumeEx} className="border-b-[1px] text-lg border-b-white text-[#ADADAD]" />
-                </View>
-                <CreateInput placeholder='Tipo de equipamento' nameAbove='Equipamento' />
-                <CreateInput placeholder='Nome do Musculo' nameAbove='Grupo muscular primário' />
-              </View>
               <View>
                   <TouchableOpacity onPress={() => handleSalvarEx()}>
                       <View className='flex flex-1 w-full justify-center items-center bg-[#F73E43] text-center p-2 rounded-full'>

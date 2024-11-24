@@ -15,6 +15,8 @@ export default function Clientes(){
 
     const user = userStorage((state) => state.user)
 
+    const tipoTreino = false
+
     const arr = [{nome: "Julia Domingos das Neves", desc:20795, status: true, image: imgJulio}, {nome: "Isaque Moscardo Nascimento", desc:20755, status: true, image: imgIsaq},{nome: "Leonardo Stanlov Santana", desc:20785, status: false, image: imgLeonardo}, {nome: "Valentina Sousa Marques", desc:20095, status: false, image: imgValentina}, {nome: "Luna Reggiani Moreira", desc:20395, status: true, image: imgLuna}]
 
     return(
@@ -27,7 +29,7 @@ export default function Clientes(){
                 <Text className="text-white text-3xl mt-5 ml-6">Alunos</Text>
                 <View className="mt-5 flex justify-center items-center">
                   {arr.map((x) => (
-                    <StudentBoxModel image={x.image} title={x.nome} desc={x.desc.toString()} status={x.status} key={x.desc} />
+                    <StudentBoxModel tipoTreino={tipoTreino} image={x.image} title={x.nome} desc={x.desc.toString()} status={x.status} key={x.desc} />
                   ))}
                 </View>
               </View>

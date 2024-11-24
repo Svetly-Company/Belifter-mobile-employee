@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Link, router, useLocalSearchParams } from 'expo-router'
 import { CaretCircleLeft, CaretCircleRight, PencilSimple } from 'phosphor-react-native'
 import { TextInput } from 'react-native'
-import { tempo, editTempo } from '../../classes/Treinos/Improvisação'
+import { tempo, editTempo, reps, editReps } from '../../classes/Treinos/Improvisação'
 
 export default function Definitions() {
 
@@ -13,12 +13,19 @@ export default function Definitions() {
 
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [seconds, setSeconds] = useState(tempo)
+  const [volume, setVolume] = useState(reps)
+
+  function handleChangeInput1(text: string){
+    editReps(text)
+    setVolume(text)
+  }
 
   function handleChangeInput(text : string){
     const numericVal = text.replace(/[^0-9]/g, "")
     editTempo(numericVal)
     setSeconds(numericVal)
   }
+  
   return (
     <>
       <View className='bg-gray-950 h-full pt-14 flex p-5'>
@@ -49,6 +56,8 @@ export default function Definitions() {
                   placeholder='15-12-10-8'
                   placeholderTextColor="#3E3E3E" 
                   maxLength={2}
+                  value={volume}
+                  onChangeText={handleChangeInput1}
                   caretHidden
                   className='flex w-64 h-10 bg-gray-800 rounded-full text-center text-gray-300 border-gray-600 border'/>
               </View>

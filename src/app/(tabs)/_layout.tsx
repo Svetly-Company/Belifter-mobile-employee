@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import { Barbell, ChatTeardropText, Globe, House, User } from "phosphor-react-native";
+import { Barbell, ChatTeardropText, Globe, House, User, UserList } from "phosphor-react-native";
 import { StatusBar } from "expo-status-bar";
 import { TouchableOpacity, StyleSheet } from "react-native";
 import {BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
@@ -58,7 +58,7 @@ export default function TabLayout(){
       }/>
       <Tabs.Screen name="clientes" options={{
         tabBarIcon: ({size, color, focused}) => (
-          <Barbell size={size} color={color} weight="bold"/>
+          <UserList size={size} color={color} weight="bold"/>
         ),
         
         tabBarButton: (props) => {

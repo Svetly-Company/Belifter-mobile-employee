@@ -4,7 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
 import { Link, router } from "expo-router";
 import { FlatList } from "react-native-gesture-handler";
-import Exercise from "../Exercise";
+import Exercise from "../Food";
 import { id } from "rn-emoji-keyboard";
 
 type exerciseProps = {
@@ -21,11 +21,12 @@ type workoutProps = {
     desc:string,
     image?:string,
     exercises?: exerciseProps[],
-    onClick: Function
+    onClickAdd: Function,
+    onClickDel: Function
 }
 
 
-export function Workouts({name, desc, image, exercises, onClick, id, matricula}:workoutProps){
+export function Workouts({name, desc, image, exercises, onClickAdd, onClickDel, id, matricula}:workoutProps){
 
     const [toggle, setToggle] = useState(false)
     
@@ -64,18 +65,20 @@ export function Workouts({name, desc, image, exercises, onClick, id, matricula}:
           {
             toggle ?
           <View className="flex items-center justify-center w-full mt-5 p-2">
-            <Link href={{pathname: "(exercises)/[id]", params: {id: route}}} className="bg-red-550 rounded-full flex w-full justify-center items-center text-center p-2">
-                    <Text className="font-ibmMedium text-xl text-gray-300">Adicionar Exercicios</Text>
-            </Link>
+            <TouchableOpacity onPress={() => onClickAdd()} style={{width:"100%"}}>
+                <View className="bg-red-550 rounded-full flex w-full justify-center text-center items-center p-2">
+                  <Text className="font-ibmMedium text-xl text-gray-300">Adicionar Exercicios</Text>
+                </View>
+              </TouchableOpacity>
             <View className="flex flex-row items-center justify-center w-full mt-5 gap-2 px-1">
-                <Link href={{pathname: "(definitions)/[id]", params: {id: route}} } className="bg-gray-600 rounded-full flex w-1/2 justify-center text-center items-center p-2" >
-                    <Text className="font-ibmMedium text-xl text-gray-300">Definições</Text>
-                </Link>
-                <TouchableOpacity onPress={() => onClick()} style={{width:"50%"}}>
-                  <View className="bg-gray-600 rounded-full flex w-full justify-center text-center items-center p-2">
-                    <Text className="font-ibmMedium text-xl text-red-550">Descartar Treino</Text>
-                  </View>
-                </TouchableOpacity>
+              <Link href={{pathname: "(definitions)/[id]", params: {id: route}} } className="bg-gray-600 rounded-full flex w-1/2 justify-center text-center items-center p-2" >
+                  <Text className="font-ibmMedium text-xl text-gray-300">Definições</Text>
+              </Link>
+              <TouchableOpacity onPress={() => onClickDel()} style={{width:"50%"}}>
+                <View className="bg-gray-600 rounded-full flex w-full justify-center text-center items-center p-2">
+                  <Text className="font-ibmMedium text-xl text-red-550">Descartar Treino</Text>
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
           : ""

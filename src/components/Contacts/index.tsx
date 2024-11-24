@@ -17,7 +17,16 @@ export function Contacts( {name, lastMessage, mediaUrl, notify, lastDate} : cont
         <View className="w-full">
             <View className={"flex-wrap bg-neutral-950 mt-4 py-6 px-6 rounded-3xl gap-2 w-full"}>
                 <View className="flex-row justify-between items-center w-full">
-                <Image source={{uri: mediaUrl}} className="w-[50] h-[50] rounded-full" />
+                {
+                    mediaUrl ? 
+
+                        <Image source={{uri: mediaUrl}} className="w-[50] h-[50] rounded-full" />
+        
+                    :
+
+                    <Image source={require('../../assets/moca.png')} className="w-[50] h-[50] rounded-full" />
+
+                }
 
                 <View className="gap-1 flex-1 flex ml-4">
                     <Text className="font-ibmRegular text-white text-[16px] ml-3">{name}</Text>
